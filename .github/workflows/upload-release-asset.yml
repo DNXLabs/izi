@@ -1,30 +1,20 @@
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
       - '*'
 
 name: Upload Release Asset
 
 jobs:
-  build:
-    name: Upload Release Asset
-    runs-on: ubuntu-latest
+
+  create_release:
+    name: Create Release
+    runs-on: [macOS-latest]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Build project
-        run: |
-          pyinstaller --add-data repos.json:. main.py --onefile -n izi
-      - name: Create Release
+      - name: Check out code
+        uses: actions/checkout@v1
+
+      - name: create release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -34,13 +24,77 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
+
+      - name: Output Release URL File
+        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+
+      - name: Save Release URL File for publish
+        uses: actions/upload-artifact@v1
+        with:
+          name: release_url
+          path: release_url.txt
+
+  build_and_upload:
+    needs: [create_release]
+    name: Build and Upload Release Asset
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Project (Linux)
+        run: |
+          pyinstaller --add-data repos.json:. main.py --onefile -n izi
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: Build Project (macOS)
+        run: |
+          pyinstaller --add-data repos.json:. main.py --onefile -n izi
+        if: matrix.os == 'macos-latest'
+
+      - name: Load Release URL File from release job
+        uses: actions/download-artifact@v1
+        with:
+          name: release_url
+
+      - name: Get Release File Name & Upload URL
+        id: get_release_info
+        run: |
+          value=`cat release_url/release_url.txt`
+          echo ::set-output name=upload_url::$value
+      - name: Upload Linux Release Asset
+        id: upload-linux-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
           asset_path: ./dist/izi
-          asset_name: izi
-          asset_content_type: application/bin
+          asset_name: izi_linux_amd64
+          asset_content_type: application/octet-stream
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: Upload Linux Release Asset
+        id: upload-macos-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
+          asset_path: ./dist/izi
+          asset_name: izi_macos_amd64
+          asset_content_type: application/octet-stream
+        if: matrix.os == 'macos-latest'
