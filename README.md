@@ -1,6 +1,16 @@
 # IZI
+Simple app to setup all environments you need to quick start contributing and developing for DNX.
+
+## Quick start
+Get everything you need from dnx in 3 steps.
+```
+mkdir dnx && cd $_
+wget https://github.com/DNXLabs/izi/releases/latest/download/izi && chmod 700 izi
+./izi
+```
 
 ## Dependencies
+- wget
 - Python 3
 
 ## Setup
