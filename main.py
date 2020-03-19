@@ -30,29 +30,35 @@ def clone_repositories():
     # Bubbletea clone action
     if not os.path.exists('bubbletea'):
         os.makedirs('bubbletea')
-        for repository in bubbletea_array:
+
+    for repository in bubbletea_array:
+        if not os.path.exists('./bubbletea/' + repository):
             git.Git("./bubbletea").clone(GITLAB_BASE_URL + BUBBLETEA_REPOSITORY_URL + repository + GIT)
             print("Cloned " + repository)
-    else:
-        print("Skipping bubbletea configuration, folder already exist")
+        else:
+            print("Skipping module" + repository + "configuration, folder already exist")
 
     # Modules clone action
     if not os.path.exists('modules'):
         os.makedirs('modules')
-        for repository in modules_array:
+
+    for repository in modules_array:
+        if not os.path.exists('./modules/' + repository):
             git.Git("./modules").clone(GITHUB_BASE_URL + repository + GIT)
             print("Cloned " + repository)
-    else:
-        print("Skipping modules configuration, folder already exist")
+        else:
+            print("Skipping module" + repository + "configuration, folder already exist")
 
     # Tools clone action
     if not os.path.exists('tools'):
         os.makedirs('tools')
-        for repository in tools_array:
+
+    for repository in tools_array:
+        if not os.path.exists('./tools/' + repository):
             git.Git("./tools").clone(GITHUB_BASE_URL + repository + GIT)
             print("Cloned " + repository)
-    else:
-        print("Skipping tools configuration, folder already exist")
+        else:
+            print("Skipping module" + repository + "configuration, folder already exist")
 
 if __name__ == '__main__':
     clone_repositories()
