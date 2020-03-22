@@ -26,11 +26,12 @@ izi --help
 #### Install dependencies
 ```bash
 pip install -r requirements.txt
+pip install --editable .
 ```
 
 #### Run
 ```bash
-python main.py
+izi --help
 ```
 
 ## Author
