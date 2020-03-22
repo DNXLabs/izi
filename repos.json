@@ -5,35 +5,122 @@
         "docker-kubectl"
     ],
     "modules": [
-        "terraform-aws-ecs",
-        "terraform-aws-ecs-app",
-        "terraform-aws-network",
-        "terraform-aws-gitlab-runner",
-        "terraform-aws-client-vpn",
-        "terraform-aws-account",
-        "terraform-aws-openvpn",
-        "terraform-aws-ecr",
-        "terraform-google-stackdriver-uptime",
-        "terraform-aws-waf",
-        "terraform-aws-backend",
-        "terraform-aws-static-app",
-        "terraform-aws-vpc-peering",
-        "terraform-aws-billing-role",
-        "terraform-aws-organization",
-        "terraform-aws-guardduty",
-        "terraform-aws-db-monitoring",
-        "terraform-aws-idp-gsuite",
-        "terraform-aws-sns",
-        "terraform-aws-hostedzone",
-        "terraform-aws-account-security",
-        "terraform-aws-lite-account-security",
-        "terraform-aws-route53healthcheck",
-        "terraform-aws-ecs-app-front",
-        "terraform-aws-ecs-app-nlb",
-        "terraform-aws-ecs-app-worker",
-        "terraform-aws-audit",
-        "terraform-aws-audit-root",
-        "terraform-aws-audit-member"
+        {
+            "name": "terraform-aws-ecs",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-ecs-app",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-network",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-gitlab-runner",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-client-vpn",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-account",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-openvpn",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-ecr",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-google-stackdriver-uptime",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-waf",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-backend",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-static-app",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-vpc-peering",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-billing-role",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-organization",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-guardduty",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-db-monitoring",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-idp-gsuite",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-sns",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-hostedzone",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-account-security",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-lite-account-security",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-route53healthcheck",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-ecs-app-front",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-ecs-app-nlb",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-ecs-app-worker",
+            "tags": ["all"]
+        },
+        {
+            "name": "terraform-aws-audit",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-audit-root",
+            "tags": ["bubbletea", "all"]
+        },
+        {
+            "name": "terraform-aws-audit-member",
+            "tags": ["bubbletea", "all"]
+        }
     ],
     "bubbletea": [
         "infra-bubbletea-app-platform",

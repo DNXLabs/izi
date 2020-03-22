@@ -1,6 +1,8 @@
-/tools
-/bubbletea
-/modules
-/build
-/dist
+tools
+bubbletea
+modules
+build
+dist
 izi.spec
+izi.egg-info
+__pycache__

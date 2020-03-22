@@ -57,12 +57,12 @@ jobs:
 
       - name: Build Project (Linux)
         run: |
-          pyinstaller --add-data repos.json:. main.py --onefile -n izi
+          pyinstaller --add-data repos.json:. izi.py --onefile -n izi
         if: matrix.os == 'ubuntu-latest'
 
       - name: Build Project (macOS)
         run: |
-          pyinstaller --add-data repos.json:. main.py --onefile -n izi
+          pyinstaller --add-data repos.json:. izi.py --onefile -n izi
         if: matrix.os == 'macos-latest'
 
       - name: Load Release URL File from release job

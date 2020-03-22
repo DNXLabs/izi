@@ -4,19 +4,21 @@ Simple app to setup all environments you need to quick start contributing and de
 ## Quick start
 Get everything you need from dnx in 3 steps.
 ```bash
-mkdir dnx && cd $_
-
 # linux
-wget https://github.com/DNXLabs/izi/releases/latest/download/izi_linux_amd64 && chmod 700 izi
+curl -L https://github.com/DNXLabs/izi/releases/latest/download/izi_linux_amd64 -o izi
 
 # macos
-wget https://github.com/DNXLabs/izi/releases/latest/download/izi_macos_amd64 && chmod 700 izi
+curl -L https://github.com/DNXLabs/izi/releases/latest/download/izi_macos_amd64 -o izi
 
-./izi
+chmod +x ./izi
+
+sudo mv ./izi /usr/local/bin/izi
+
+izi --help
 ```
 
 ## Dependencies
-- wget
+- curl
 - Python 3
 
 ## Setup
