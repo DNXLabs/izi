@@ -3,6 +3,7 @@
 import git
 import json
 import os
+import sys
 import fileinput
 import click
 
@@ -22,21 +23,22 @@ def resource_path(relative_path):
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
-        base_path = os.path.abspath(".")
+        base_path = os.path.abspath('.')
 
     return os.path.join(base_path, relative_path)
 
-input_file = open(resource_path('repos.json'))
+input_file = open(resource_path('data.json'))
 json_obj   = json.load(input_file)
 
 bubbletea_array = json_obj['bubbletea']
 tools_array     = json_obj['tools']
 modules_array   = json_obj['modules']
 
-GITLAB_BASE_URL          = "git@gitlab.com:DNXLabs/"
-GITHUB_BASE_URL          = "git@github.com:DNXLabs/"
-BUBBLETEA_REPOSITORY_URL = "bubbletea/aws-platform/"
-GIT                      = ".git"
+GITLAB_BASE_URL          = 'git@gitlab.com:DNXLabs/'
+GITHUB_BASE_URL          = 'git@github.com:DNXLabs/'
+BUBBLETEA_REPOSITORY_URL = 'bubbletea/aws-platform/'
+GIT                      = '.git'
+
 
 @cli.command()
 @click.argument('stack')
@@ -50,11 +52,12 @@ def get(stack: str):
     # Tools clone action
     clone_tools(stack)
 
+
 @cli.command()
 @click.argument('project')
 def init(project: str):
-    # Bubbletea clone action
     clone_stack(project)
+
 
 def clone_stack(project):
     if not os.path.exists(project):
@@ -65,9 +68,10 @@ def clone_stack(project):
             git.Git('./' + project).clone(GITLAB_BASE_URL + BUBBLETEA_REPOSITORY_URL + repository + GIT)
             new_repository = repository.replace('bubbletea', project)
             os.rename('./' + project + '/' + repository, './' + project + '/' + new_repository)
-            print("Cloned " + repository)
+            print('Cloned ' + repository)
         else:
-            print("Skipping module" + repository + "configuration, folder already exist")
+            print('Skipping module' + repository + 'configuration, folder already exist')
+
 
 def clone_modules(project):
     if not os.path.exists('modules'):
@@ -78,11 +82,12 @@ def clone_modules(project):
         for tag in tags_array:
             if tag == project:
                 if not os.path.exists('./modules/' + repository['name']):
-                    git.Git("./modules").clone(GITHUB_BASE_URL + repository['name'] + GIT)
-                    print("Cloned " + repository['name'])
+                    git.Git('./modules').clone(GITHUB_BASE_URL + repository['name'] + GIT)
+                    print('Cloned ' + repository['name'])
                 else:
-                    print("Skipping module" + repository['name'] + "configuration, folder already exist")
+                    print('Skipping module' + repository['name'] + 'configuration, folder already exist')
                 break
+
 
 def clone_tools(project):
     if not os.path.exists('tools'):
@@ -90,10 +95,11 @@ def clone_tools(project):
 
     for repository in tools_array:
         if not os.path.exists('./tools/' + repository):
-            git.Git("./tools").clone(GITHUB_BASE_URL + repository + GIT)
-            print("Cloned " + repository)
+            git.Git('./tools').clone(GITHUB_BASE_URL + repository + GIT)
+            print('Cloned ' + repository)
         else:
-            print("Skipping module" + repository + "configuration, folder already exist")
+            print('Skipping module' + repository + 'configuration, folder already exist')
+
 
 @cli.command()
 @click.argument('project')
@@ -376,3 +382,6 @@ def mount(project: str):
                         mount_file.write(line)
                 os.remove(os.path.abspath(os.path.join(subdir, file)))
                 os.rename(os.path.abspath(os.path.join(subdir, '.mount-' + file)), os.path.abspath(os.path.join(subdir, file)))
+
+if __name__ == '__main__':
+    cli()

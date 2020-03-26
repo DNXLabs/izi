@@ -1,0 +1,1 @@
+pyinstaller cli.py --onefile --noconsole -n izi

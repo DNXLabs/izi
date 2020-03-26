@@ -57,12 +57,12 @@ jobs:
 
       - name: Build Project (Linux)
         run: |
-          pyinstaller --add-data repos.json:. izi.py --onefile -n izi
+          pyinstaller --hidden-import izi.__main__ --add-data data.json:. cli.py --onefile --noconsole -n izi
         if: matrix.os == 'ubuntu-latest'
 
       - name: Build Project (macOS)
         run: |
-          pyinstaller --add-data repos.json:. izi.py --onefile -n izi
+          pyinstaller --hidden-import izi.__main__ --add-data data.json:. cli.py --onefile --noconsole -n izi
         if: matrix.os == 'macos-latest'
 
       - name: Load Release URL File from release job
@@ -75,6 +75,7 @@ jobs:
         run: |
           value=`cat release_url/release_url.txt`
           echo ::set-output name=upload_url::$value
+
       - name: Upload Linux Release Asset
         id: upload-linux-release-asset
         uses: actions/upload-release-asset@v1
