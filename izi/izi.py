@@ -40,7 +40,7 @@ BUBBLETEA_REPOSITORY_URL = 'bubbletea/aws-platform/'
 GIT                      = '.git'
 
 
-@cli.command()
+@cli.command(help='Download the bubbletea stack, modules and tools.')
 @click.argument('stack')
 def get(stack: str):
     # Bubbletea clone action
@@ -53,7 +53,7 @@ def get(stack: str):
     clone_tools(stack)
 
 
-@cli.command()
+@cli.command(help='Start a new project using the latest commit from all bubbletea stacks.')
 @click.argument('project')
 def init(project: str):
     clone_stack(project)
@@ -101,7 +101,7 @@ def clone_tools(project):
             print('Skipping module' + repository + 'configuration, folder already exist')
 
 
-@cli.command()
+@cli.command(help='Create symbolic link between modules and the stack you pass as parameter.')
 @click.argument('project')
 def link(project: str):
     # Link project with modules
@@ -114,7 +114,7 @@ def link(project: str):
     link_infra_root(project)
 
 
-@cli.command()
+@cli.command(help='Delete symbolic link if exists between modules and the stack you pass as parameter.')
 @click.argument('project')
 def unlink(project: str):
     # Link project with modules
@@ -362,7 +362,7 @@ def unlink_infra_root(project):
         print('Unlinking terraform-aws-organization')
         os.unlink(os.path.abspath(root_path + 'terraform-aws-organization'))
 
-@cli.command()
+@cli.command(help='Rewrite all modules sources to the local modules from the stack you pass as parameter.')
 @click.argument('project')
 def mount(project: str):
     for subdir, dirs, files in os.walk(project):
