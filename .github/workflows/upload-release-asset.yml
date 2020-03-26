@@ -88,7 +88,7 @@ jobs:
           asset_content_type: application/octet-stream
         if: matrix.os == 'ubuntu-latest'
 
-      - name: Upload Linux Release Asset
+      - name: Upload macOS Release Asset
         id: upload-macos-release-asset
         uses: actions/upload-release-asset@v1
         env:
