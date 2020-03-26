@@ -15,7 +15,7 @@ class bcolors:
 
 @click.group()
 def cli():
-    """A CLI wrapper for the IZI."""
+    """A CLI to setup all environments you need to quick start contributing and developing for DNX"""
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
