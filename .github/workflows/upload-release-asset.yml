@@ -55,15 +55,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build Project (Linux)
+      - name: Build Project
         run: |
           pyinstaller --hidden-import izi.__main__ --add-data data.json:. cli.py --onefile --noconsole -n izi
-        if: matrix.os == 'ubuntu-latest'
-
-      - name: Build Project (macOS)
-        run: |
-          pyinstaller --hidden-import izi.__main__ --add-data data.json:. cli.py --onefile --noconsole -n izi
-        if: matrix.os == 'macos-latest'
 
       - name: Load Release URL File from release job
         uses: actions/download-artifact@v1
