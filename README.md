@@ -17,11 +17,28 @@ sudo mv ./izi /usr/local/bin/izi
 izi --help
 ```
 
-## Dependencies
-- curl
-- Python 3
+## Usage
+```
+Usage: izi [OPTIONS] COMMAND [ARGS]...
+
+  A CLI to setup all environments you need to quick start contributing and
+  developing for DNX
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  get     Download the bubbletea stack, modules and tools.
+  init    Start a new project using the latest commit from all bubbletea...
+  link    Create symbolic link between modules and the stack you pass as...
+  mount   Rewrite all modules sources to the local modules from the stack...
+  unlink  Delete symbolic link if exists between modules and the stack you...
+```
 
 ## Setup
+
+## Dependencies
+- Python 3
 
 #### Install dependencies
 ```bash
@@ -31,7 +48,7 @@ pip install --editable .
 
 #### Run
 ```bash
-izi --help
+$ izi
 ```
 
 ## Author
