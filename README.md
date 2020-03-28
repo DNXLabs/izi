@@ -2,18 +2,29 @@
 Simple app to setup all environments you need to quick start contributing and developing for DNX.
 
 ## Quick start
-Get everything you need from dnx in 3 steps.
-```bash
+Get everything you need from dnx in 4 steps.
+
+1. Download the latest release with the command.
+```
 # linux
 curl -L https://github.com/DNXLabs/izi/releases/latest/download/izi_linux_amd64 -o izi
 
 # macos
 curl -L https://github.com/DNXLabs/izi/releases/latest/download/izi_macos_amd64 -o izi
+```
 
+2. Make the izi binary executable.
+```
 chmod +x ./izi
+```
 
+3. Move the binary in to your PATH.
+```
 sudo mv ./izi /usr/local/bin/izi
+```
 
+4. Test to ensure the version you installed is up-to-date.
+```
 izi --help
 ```
 
