@@ -3,6 +3,7 @@
 Simple app to setup all environments you need to quick start contributing and developing for DNX.
 
 ![Build](https://github.com/DNXLabs/izi/workflows/Build/badge.svg)
+[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-ecs)](https://github.com/DNXLabs/izi/blob/master/LICENSE)
 
 ## Quick start
 Get everything you need from DNX in 4 steps.
