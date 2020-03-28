@@ -1,3 +1,4 @@
 gitpython
 pyinstaller
 click
+python3-gitlab
