@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Project
         run: |
-          pyinstaller --hidden-import izi.__main__ --add-data data.json:. cli.py --onefile --noconsole -n izi
+          pyinstaller --clean --hidden-import izi.__main__ --hidden-import gitlab.v4 --hidden-import gitlab.v4.objects --add-data data.json:. cli.py --onefile --noconsole -n izi
 
       - name: Load Release URL File from release job
         uses: actions/download-artifact@v1

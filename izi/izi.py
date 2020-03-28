@@ -6,6 +6,9 @@ import os
 import sys
 import fileinput
 import click
+import shutil
+import gitlab
+import time
 
 class bcolors:
     OK = '\033[92m'
@@ -38,6 +41,7 @@ GITLAB_BASE_URL          = 'git@gitlab.com:DNXLabs/'
 GITHUB_BASE_URL          = 'git@github.com:DNXLabs/'
 BUBBLETEA_REPOSITORY_URL = 'bubbletea/aws-platform/'
 GIT                      = '.git'
+COMMIT_MESSAGE           = 'Foundation'
 
 
 @cli.command(help='Download the bubbletea stack, modules and tools.')
@@ -56,7 +60,7 @@ def get(stack: str):
 @cli.command(help='Start a new project using the latest commit from all bubbletea stacks.')
 @click.argument('project')
 def init(project: str):
-    clone_stack(project)
+    setup_stack(project)
 
 
 def clone_stack(project):
@@ -72,6 +76,53 @@ def clone_stack(project):
         else:
             print('Skipping module' + repository + 'configuration, folder already exist')
 
+
+def setup_stack(project):
+    push_to_gitlab = input("Would you like to push the repositories to GitLab? [Y/n] ")
+
+    if push_to_gitlab.lower() == 'y' or push_to_gitlab.lower() == 'yes' or push_to_gitlab == '':
+        gitlab_group_id = input("What's the GitLab group ID? ")
+        gitlab_private_token = input("What's the GitLab private token? ")
+
+        gl = gitlab.Gitlab('https://gitlab.com/', private_token=gitlab_private_token)
+        gl.auth()
+        push_to_gitlab = True
+    else:
+        push_to_gitlab = False
+
+    if not os.path.exists(project):
+        os.makedirs(project)
+
+    for repository in bubbletea_array:
+        if not os.path.exists('./'+ project + '/' + repository.replace('bubbletea', project)):
+            cloned_repo = git.Git('./' + project).clone(GITLAB_BASE_URL + BUBBLETEA_REPOSITORY_URL + repository + GIT)
+            print('Cloned ' + repository)
+            new_repository = repository.replace('bubbletea', project)
+            
+            shutil.rmtree('./'+ project + '/' + repository + '/.git')
+            print('Removed .git on ' + repository)
+
+            os.rename('./' + project + '/' + repository, './' + project + '/' + new_repository)
+            print('Renamed ' + repository + ' to ' + new_repository)
+
+            repo = git.Repo.init('./' + project + '/' + new_repository)
+            print('Restarted .git repository on ' + new_repository)
+
+            if push_to_gitlab:
+                group = gl.groups.get(gitlab_group_id)
+                gitlab_repo = gl.projects.create({'name': new_repository, 'namespace_id': gitlab_group_id})
+                print('GitLab repository created')
+
+                origin = repo.create_remote('origin', url=gitlab_repo.ssh_url_to_repo)
+                repo.git.add(A=True)
+                repo.index.commit(COMMIT_MESSAGE)
+                local_branch  = 'master'
+                remote_branch = 'master'
+                origin.push(refspec='{}:{}'.format(local_branch, remote_branch))
+                print('Pushed code to repository')
+        
+        else:
+            print('Skipping module ' + repository + ' configuration, folder already exist')
 
 def clone_modules(project):
     if not os.path.exists('modules'):
