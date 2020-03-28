@@ -53,8 +53,8 @@ Commands:
 
 #### Install dependencies
 ```bash
-pip install -r requirements.txt
-pip install --editable .
+pip3 install -r requirements.txt
+pip3 install --editable .
 ```
 
 #### Run
