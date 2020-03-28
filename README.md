@@ -1,8 +1,11 @@
 # IZI
+
 Simple app to setup all environments you need to quick start contributing and developing for DNX.
 
+![Build](https://github.com/DNXLabs/izi/workflows/Build/badge.svg)
+
 ## Quick start
-Get everything you need from dnx in 4 steps.
+Get everything you need from DNX in 4 steps.
 
 1. Download the latest release with the command.
 ```
@@ -52,6 +55,7 @@ Commands:
 - Python 3
 
 #### Install dependencies
+
 ```bash
 pip3 install -r requirements.txt
 pip3 install --editable .
