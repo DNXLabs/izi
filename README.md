@@ -61,6 +61,20 @@ pip3 install --editable .
 ```bash
 $ izi
 ```
+## Creating a personal access token
+
+#### GitLab
+You can create as many personal access tokens as you like from your GitLab profile.
+
+1. In the upper-right corner, click your avatar and select **Settings**.
+2. On the **User Settings** menu, select **Access Tokens**.
+3. Choose a name and optional expiry date for the token.
+4. Choose the desired scopes.
+5. Click the **Create personal access token** button.
+6. Save the personal access token somewhere safe. Once you leave or refresh the page, you won’t be able to access it again.
+7. Revoking a personal access token
+8. At any time, you can revoke any personal access token by clicking the respective Revoke button under the Active Personal Access Token area.
+
 
 ## Author
 App managed by DNX Solutions.
